@@ -1,17 +1,19 @@
-const bcrypt = require("bcryptjs");
-const Users = require("../users/user-model.js");
+// const express = require("express");
+// const bcrypt = require("bcryptjs");
+// const Users = require("../users/user-model.js");
 
 function restricted(req, res, next) {
-  // does client have a session, and do i have the user info?
   console.log("SESSION: ", req.session);
+
+  // check if we have a session, and inside of that session, there is a user property
   if (req.session && req.session.user) {
     next();
   } else {
-    res.status(401).json({ message: "you shall not pass!" });
+    res.status(401).json({ message: "not authorized!" });
   }
 
+  // no need to search for anything in the DB
   // let { username, password } = req.headers; // credentials
-
   // if (username && password) {
   //   Users.findBy({ username })
   //     .first()
