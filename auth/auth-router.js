@@ -24,12 +24,29 @@ router.post(`/login`, (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        req.session.user = user; // added this - nothing tied to cookie b/c in memory - server restarted
+        console.log("LOGIN: ", req.session);
         res.status(200).json({ message: `Welcome ${user.username}!` });
       } else {
         res.status(401).json({ message: `You shall not pass.` });
       }
     })
     .catch(err => res.status(500).json(err));
+});
+
+// LOGOUT
+router.get(`/logout`, (req, res) => {
+  if (req.session) {
+    req.session.destroy(error => {
+      if (error) {
+        res.status(500).json({ message: "you can never leave!!!" });
+      } else {
+        res.status(200).json({ message: "bye" });
+      }
+    });
+  } else {
+    res.status(200).json({ message: "already logged out" });
+  }
 });
 
 module.exports = router;
