@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRouter = require("./users/user-router.js");
+const authRouter = require("./auth/auth-router.js");
 
 const server = express();
 
@@ -46,5 +47,6 @@ server.post(`/api/login`, (req, res) => {
 
 // ROUTES
 server.use(`/api/user`, userRouter);
+server.use(`/api`, authRouter);
 
 module.exports = server;
