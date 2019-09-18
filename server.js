@@ -16,7 +16,7 @@ const sessionConfig = {
     httpOnly: true // true means JS has no access to the cookie
   },
   resave: false, // don't want to recreate a session even if it hasn't changed
-  saveUnitialized: false, // GDPR compliance - laws against setting cookies automatically (user opts in => can be true)
+  saveUninitialized: false, // GDPR compliance - laws against setting cookies automatically (user opts in => can be true)
 
   // persist sessions
   store: new KnexSessionStore({
