@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+
 const userRouter = require("./users/user-router.js");
 const authRouter = require("./auth/auth-router.js");
 const session = require("express-session");
@@ -13,7 +15,7 @@ const server = express();
 
 const sessionConfig = {
   name: "grumpycookie", // sid (session_id)
-  secret: process.env.SESSION_SECRET || "secret", // wat is this?
+  secret: process.env.SESSION_SECRET || "secret", // wat is this? needed for encryption - decrypt with "secret"
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     // maxAge: 1000 * 10, // 10 seconds
