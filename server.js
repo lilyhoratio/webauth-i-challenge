@@ -1,10 +1,15 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
+
+// SESSIONS
 const session = require("express-session");
-// currying - function of several arguments that accepts
-// first arg and returns a function that accepts the second argument
 const KnexSessionStore = require("connect-session-knex")(session);
 const dbConnection = require("./data/dbConfig.js");
+
+// ROUTES
+const userRouter = require("./users/user-router.js");
+const authRouter = require("./auth/auth-router.js");
 
 const sessionConfig = {
   name: "grumpycookie", // sid (session_id)
@@ -28,14 +33,20 @@ const sessionConfig = {
   })
 };
 
-const userRouter = require("./users/user-router.js");
-const authRouter = require("./auth/auth-router.js");
-
 const server = express();
+
+// needed for what exactly?
+server.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:4445"
+  })
+);
 
 server.use(express.json());
 server.use(cors());
 server.use(session(sessionConfig));
+server.use(morgan("short"));
 
 // Sanity check
 server.get(`/`, (req, res) => {

@@ -13,7 +13,10 @@ router.post(`/register`, (req, res) => {
       req.session.user = user; // remove this if you want to only authenticate but not authorize them
       res.status(201).json(user);
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // LOGIN
@@ -33,7 +36,10 @@ router.post(`/login`, (req, res) => {
         res.status(401).json({ message: `You shall not pass.` });
       }
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // LOGOUT
